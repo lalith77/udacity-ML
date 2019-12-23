@@ -1,4 +1,3 @@
-#!/usr/bin/python
 
 """ 
     Starter code for exploring the Enron dataset (emails + finances);
@@ -17,18 +16,25 @@
 
 import pickle
 
-enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "rb"))
+enron_data = pickle.load(
+    open("../final_project/final_project_dataset.pkl", "rb"))
 
 
 print("length of dictionary is : ", len(enron_data))
 print("The keys are : ", enron_data.keys())
+<<<<<<< HEAD
 print("The number of features for each person are :", len(enron_data["BAXTER JOHN C"].keys()))
+=======
+print("The number of features for each person are :",
+      len(enron_data["BAXTER JOHN C"].keys()))
+>>>>>>> af80da600342b8924a132fd55291ec8c623bc03d
 print("The features are:", enron_data["BAXTER JOHN C"].keys())
 
 people = enron_data.keys()
 poi_count = 0
 for i in people:
     if (enron_data[i]["poi"] == 1):
+<<<<<<< HEAD
         poi_count= poi_count+1
 
 print("The number of persons of interest are :", poi_count)
@@ -68,3 +74,24 @@ print("people with payments are:", people_with_payments)
 print("number of pois are:",poi_count)
 print("pois without payment are:", pois_without_payment)
 print("percentage of pois without payment are:", (pois_without_payment/ poi_count) * 100)
+=======
+        poi_count = poi_count+1
+
+print("The number of persons of interest are :", poi_count)
+
+print("The total stock value for James Prentice is:",
+      enron_data["PRENTICE JAMES"]["total_stock_value"])
+
+print("Number of emails from Colwell wesley to poi",
+      enron_data["COLWELL WESLEY"]["from_this_person_to_poi"])
+
+print("Value of exercised stock options by Jeffrey Skilling",
+      enron_data["SKILLING JEFFREY K"]["exercised_stock_options"])
+
+people_without_payments = 0
+for i in people:
+    if (enron_data[i]['total_payments'] == 'NaN'):
+        people_without_payments = people_without_payments+1
+print("Percentage of people without payments is",
+      (people_without_payments / len(people)) * 100)
+>>>>>>> af80da600342b8924a132fd55291ec8c623bc03d
