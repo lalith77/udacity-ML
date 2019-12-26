@@ -7,6 +7,7 @@
 
 from sklearn.cluster import KMeans
 from feature_format import featureFormat, targetFeatureSplit
+from sklearn.preprocessing import MinMaxScaler
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
@@ -49,8 +50,14 @@ feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 feature_3 = "total_payments"
 poi = "poi"
-features_list = [poi, feature_1, feature_2,feature_3]
+features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list)
+
+scaler = MinMaxScaler()
+scaler.fit(data)
+print("data before scaling", data)
+data = scaler.transform(data)
+print("Data after scaling", data)
 poi, finance_features = targetFeatureSplit(data)
 
 
@@ -58,7 +65,10 @@ poi, finance_features = targetFeatureSplit(data)
 # you'll want to change this line to
 # for f1, f2, _ in finance_features:
 # (as it's currently written, the line below assumes 2 features)
-for f1, f2, _ in finance_features:
+# scaling finance features
+
+
+for f1, f2 in finance_features:
     plt.scatter(f1, f2)
 plt.show()
 
@@ -74,12 +84,12 @@ try:
 except NameError:
     print("no predictions object named pred found, no clusters to plot")
 
-print("Max value of exercised_stock_options is:", data[:,2].max())
-stock_options = data[:,2]
-nonzero_stock_options = stock_options[stock_options!= 0]
+print("Max value of exercised_stock_options is:", data[:, 2].max())
+stock_options = data[:, 2]
+nonzero_stock_options = stock_options[stock_options != 0]
 print("Min value of exercised_stock options is: ", nonzero_stock_options.min())
 
-print("Max value of salary is:", data[:,1].max())
-salary = data[:,1]
-nonzero_salary = salary[salary!= 0]
+print("Max value of salary is:", data[:, 1].max())
+salary = data[:, 1]
+nonzero_salary = salary[salary != 0]
 print("Min value of salary is: ", nonzero_salary.min())
