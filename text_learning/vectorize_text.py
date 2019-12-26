@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
-from parse_out_email_text import parseOutText
+
 import os
 import pickle
 import re
 import sys
 
 sys.path.append("../tools/")
-
+from parse_out_email_text import parseOutText
 """
     Starter code to process the emails from Sara and Chris to extract
     the features and get the documents ready for classification.
@@ -57,7 +57,10 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             # append the text to word_data
             word_data.append(my_text)
             # append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
+            if (name == "sara"):
+                from_data.append(0)
+            else:
+                from_data.append(1)
             email.close()
 
 print("emails processed")
