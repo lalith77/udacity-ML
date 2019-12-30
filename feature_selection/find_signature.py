@@ -10,8 +10,8 @@ numpy.random.seed(42)
 ### mini-project.
 words_file = "../text_learning/your_word_data.pkl" 
 authors_file = "../text_learning/your_email_authors.pkl"
-word_data = pickle.load( open(words_file, "r"))
-authors = pickle.load( open(authors_file, "r") )
+word_data = pickle.load( open(words_file, "rb"))
+authors = pickle.load( open(authors_file, "rb") )
 
 
 
@@ -39,5 +39,24 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn import tree
+clf = tree.DecisionTreeClassifier()
+print("Training data ...")
+print("The number of features are", len(features_train[0]))
+print(features_train.shape)
 
+clf.fit(features_train, labels_train)
+
+print(clf.score(features_test, labels_test))
+
+importances = clf.feature_importances_
+highest_importance = 0
+most_imp_feature =0
+for i in range(1,len(features_train)):
+    if(importances[i]>importances[i-1]):
+        highest_importance = importances[i]
+        most_imp_feature = i
+print([i for i in importances if i>0.2])
+print("highest importance is:",highest_importance)
+print("the number for most important feature is:",most_imp_feature)
 

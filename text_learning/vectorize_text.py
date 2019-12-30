@@ -34,15 +34,15 @@ word_data = []
 # can take a long time
 # temp_counter helps you only look at the first 200 emails in the list so you
 # can iterate your modifications quicker
-temp_counter = 0
+temp_counter = 1
 
 
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         # only look at first 200 emails when developing
         # once everything is working, remove this line to run over full dataset
-        temp_counter += 1
-        if temp_counter < 200:
+        #temp_counter += 1
+        if temp_counter :
             path = os.path.join('..', path[:-1])
             print(path)
             email = open(path, "r")
@@ -64,11 +64,22 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             email.close()
 
 print("emails processed")
+print(word_data[152])
+
 from_sara.close()
 from_chris.close()
 
-pickle.dump(word_data, open("your_word_data.pkl", "w"))
-pickle.dump(from_data, open("your_email_authors.pkl", "w"))
-
+pickle.dump(word_data, open("your_word_data.pkl", "wb"))
+pickle.dump(from_data, open("your_email_authors.pkl", "wb"))
 
 # in Part 4, do TfIdf vectorization here
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(stop_words="english")
+X = vectorizer.fit_transform(word_data)
+print(vectorizer.get_feature_names())
+
+print(X.shape)
+print(type(X))
+print(len(vectorizer.get_feature_names()))
+print(print("feature names 34597 is:",vectorizer.get_feature_names()[34597]))
+
