@@ -16,7 +16,7 @@ The dataset used in this example is a preprocessed excerpt of the
 
 
 
-print __doc__
+print(__doc__)
 
 from time import time
 import logging
@@ -53,8 +53,8 @@ y = lfw_people.target
 target_names = lfw_people.target_names
 n_classes = target_names.shape[0]
 
-print "Total dataset size:"
-print "n_samples: %d" % n_samples
+print("Total dataset size:")
+print ("n_samples: %d" % n_samples)
 print "n_features: %d" % n_features
 print "n_classes: %d" % n_classes
 
