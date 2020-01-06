@@ -81,5 +81,5 @@ print(vectorizer.get_feature_names())
 print(X.shape)
 print(type(X))
 print(len(vectorizer.get_feature_names()))
-print(print("feature names 34597 is:",vectorizer.get_feature_names()[34597]))
+print(print("feature names 36566 is:",vectorizer.get_feature_names()[36566]))
 

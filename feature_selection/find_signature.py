@@ -44,6 +44,7 @@ clf = tree.DecisionTreeClassifier()
 print("Training data ...")
 print("The number of features are", len(features_train[0]))
 print(features_train.shape)
+print("features train[0] is :",features_train[0])
 
 clf.fit(features_train, labels_train)
 
@@ -52,7 +53,7 @@ print(clf.score(features_test, labels_test))
 importances = clf.feature_importances_
 highest_importance = 0
 most_imp_feature =0
-for i in range(1,len(features_train)):
+for i in range(1,len(features_train[0])):
     if(importances[i]>importances[i-1]):
         highest_importance = importances[i]
         most_imp_feature = i
