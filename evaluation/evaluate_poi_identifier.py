@@ -40,7 +40,12 @@ clf.fit(features_train, labels_train)
 my_predictions = clf.predict(features_test)
 print("the predictions are:",my_predictions)
 print("test labels are:",labels_test)
+print("total number of people are:", len(labels))
+total_pois= 0
+for i in labels:
+    total_pois +=i
 
+print("total number of pois are:", total_pois)
 print(clf.score(features_test, labels_test))
 
 
