@@ -5,6 +5,7 @@ import pickle
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
+from sklearn.preprocessing import MinMaxScaler
 #from tester import dump_classifier_and_data
 import matplotlib.pyplot as plt
 from sklearn import tree
@@ -13,7 +14,7 @@ from sklearn.model_selection import train_test_split
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
-features_list = ['poi','salary','from_poi_to_this_person'] # You will need to use more features
+features_list = ['poi','total_payments','total_stock_value','from_poi_to_this_person'] # You will need to use more features
 
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "rb") as data_file:
@@ -25,6 +26,27 @@ with open("final_project_dataset.pkl", "rb") as data_file:
 #print("The keys are : ", data_dict.keys())
 #print(data_dict.pop('TOTAL'))
 data_dict.pop('TOTAL')
+
+for name in data_dict:
+    for feature in ['total_stock_value','total_payments']:
+        if data_dict[name][feature] == 'NaN':
+            data_dict[name][feature] = 0
+for name in data_dict:
+    stock = float(data_dict[name]['total_stock_value'])
+    total_value = float(data_dict[name]['total_payments'] )+ stock
+    data_dict[name]['total_money'] = total_value
+    print("total money for {} is {}".format(name, total_value))
+features_list = ['poi','total_money','from_poi_to_this_person'] 
+
+dict_len = data_dict.keys()
+print(dict_len)
+for i in range(0,dict_len):
+    plt.scatter(i, data_dict[i]['from_poi_to_this_person'])
+    
+plt.xlabel("index")
+plt.ylabel("emails")
+plt.show()
+
 my_dataset = data_dict
 
 ### Extract features and labels from dataset for local testing
@@ -34,21 +56,22 @@ print("shape of data is:", data.shape)
 
 print(len(data[0]))
 print(len(data[1]))
+print("data[0] before scaling is:",data[0])
+scaler = MinMaxScaler()
+print(scaler.fit(data))
 
+print("Max data is:",scaler.data_max_)
+data =scaler.transform(data)
+print("data[0] after transform",data[0])
 
 labels, features = targetFeatureSplit(data)
 
 print("type of labels:",type(labels))
 print("type of features:", type(features))
-print(features)
+# print(features)
 print("length of labels is: {} and length of features is {}: " .format(len(labels) ,len(features)))
 
-for i in range(0,len(features)):
-    plt.scatter(i, features[i][0])
-    
-plt.xlabel("index")
-plt.ylabel("salary")
-plt.show()
+
 features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size = 0.2, random_state = 42)
 
 clf = tree.DecisionTreeClassifier(min_samples_split=5)
